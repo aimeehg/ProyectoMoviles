@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/txtNombre" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/nombreMedico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:inputType="textCapWords"
+        android:maxLines="1" >
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/apellidos" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/apellidosMedico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:inputType="textCapWords"
+        android:maxLines="1" >
+    </EditText>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/dirMedico" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/direccionConsultorio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:inputType="textPostalAddress"
+        android:maxLines="1" >
+    </EditText>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/email">
+    </TextView>
+
+    <EditText
+        android:id="@+id/emailMedico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:inputType="textEmailAddress"
+        android:maxLines="1" >
+    </EditText>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/celular">
+    </TextView>
+
+    <EditText
+        android:id="@+id/celularMedico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:inputType="phone"
+        android:maxLines="1" >
+    </EditText>
+    <Button
+        android:id="@+id/enviarBtnMedico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:text="@string/enviar"/>
+
+    </LinearLayout>
+</LinearLayout>

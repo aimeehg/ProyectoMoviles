@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Proyecto</string>
+    <string name="btnAceptar">Aceptar</string>
+    <string name="btnCancelar">Cancelar</string>
+    <string name="btnRegistro">Registro</string>
+    <string name="txtUsuario">Usuario:</string>
+    <string name="txtPass">Contraseña:</string>
+    <string name="txtNombre">Nombre:</string>
+    <string name="txtPaterno">Apellido Paterno:</string>
+    <string name="txtMaterno">Apellido Materno:</string>
+    <string name="txtDireccion">Dirección:</string>
+    <string name="txtEdad">Edad:</string>
+    <string name="txtPeso">Peso(kg):</string>
+    <string name="txtAltura">Altura(m):</string>
+    <string name="txtGenero">Género:</string>
+    <string name="GeneroM">Masculino</string>
+    <string name="GeneroF">Femenino</string>
+    <string name="txtMedicamento">Medicamento:</string>
+    <string name="btnLogout">Salir</string>
+    <string name="lvlGlucosa">Nivel de glucosa(mg/dl):</string>
+    <string name="fecha">Fecha:</string>
+    <string name="sFecha">Selecciona fecha</string>
+    <string name="hora">Hora:</string>
+    <string name="sHora">Selecciona hora:</string>
+    <string name="antesDespues">Antes/Después de alimentos:</string>
+    <string name="enviar">Enviar</string>
+    <string name="email">E-mail:</string>
+    <string name="celular">Celular:</string>
+    <string name="apellidos">Apellidos:</string>
+    <string name="dirMedico">Dirección de consultorio:</string>
+    <string-array name="medicamentos">
+        <item>Seleccionar...</item>
+        <item>Biguanidas</item>
+        <item>Sulfonilureas</item>
+        <item>Insulina</item>
+        <item>Meglitinidas</item>
+        <item>Tiazolidinediona</item>
+    </string-array>
+    <string-array name="alimentos">
+        <item>Seleccionar...</item>
+        <item>Antes</item>
+        <item>Después</item>
+    </string-array>
+    <string name="action_settings">Cerrar sesión</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
