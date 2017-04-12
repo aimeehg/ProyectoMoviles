@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     protected Session session;
-
+    private int iduser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             logout();
         }
         else {
-            int iduser = session.prefs.getInt("KEY",0);
+             iduser = session.prefs.getInt("KEY",0);
             //texto.setText(String.valueOf(iduser));
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
