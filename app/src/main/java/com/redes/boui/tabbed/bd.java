@@ -95,6 +95,56 @@ public class bd extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public void insertarMedico(String nombre, String apellidos, String dir, String cel, String email,
+                                 int idpaciente) {
+        SQLiteDatabase db = getWritableDatabase();
+        if(db != null){
+            ContentValues valores = new ContentValues();
+            valores.put("nombre", nombre);
+            valores.put("apellidos", apellidos);
+            valores.put("dir_consultorio", dir);
+            valores.put("celular", cel);
+            valores.put("email", email);
+            valores.put("id_paciente", idpaciente);
+
+            db.insert("medico", null, valores);
+            db.close();
+        }
+    }
+    public Medico getMedico(int id_paciente){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] valores_recuperar = {"ID_MED", "nombre", "apellidos", "dir_consultorio", "celular", "email", "id_paciente"};
+        Cursor c = db.query("medico", valores_recuperar, "id_paciente=" + id_paciente,
+                null, null, null, null, null);
+        Medico medico = null;
+        if(c.getCount()>0) {
+            if (c != null) {
+                c.moveToFirst();
+            }
+            Log.e("hey", c.getString(1));
+           medico = new Medico(c.getInt(0),c.getString(1), c.getString(2),
+                    c.getString(3), c.getString(5), c.getString(4), c.getInt(6));
+
+        }
+        //medico = null;
+        db.close();
+        c.close();
+        return medico;
+    }
+    public int editarMedico(Medico medico){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("nombre", medico.getNombre());
+        values.put("apellidos", medico.getApellidos());
+        values.put("dir_consultorio", medico.getDirConsultorio());
+        values.put("celular", medico.getCelular());
+        values.put("email", medico.getEmail());
+        // updating row
+        return db.update("medico", values, "ID_MED = ?",
+                new String[] { String.valueOf(medico.getId_med()) });
+    }
     public int Login(String usuario, String password){
         int id = -1;
         SQLiteDatabase db = this.getReadableDatabase();

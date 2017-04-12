@@ -5,17 +5,26 @@ package com.redes.boui.tabbed;
  */
 
 public class Medico {
-    protected String nombre, paterno, materno, dirConsultorio, celular, email;
-    protected int idPaciente;
-    public Medico(String nombre, String paterno, String materno, String dirConsultorio, String celular,
+    protected String nombre, apellidos, dirConsultorio, celular, email;
+    protected int id_med,idPaciente;
+   // public Medico(){}
+    public Medico(int id_med, String nombre, String apellidos, String dirConsultorio, String celular,
     String email, int idPaciente){
+        this.id_med = id_med;
         this.nombre = nombre;
-        this.paterno = materno;
-        this.materno = materno;
+        this.apellidos = apellidos;
         this.dirConsultorio = dirConsultorio;
         this.celular = celular;
         this.email = email;
         this.idPaciente = idPaciente;
+    }
+
+    public int getId_med() {
+        return id_med;
+    }
+
+    public void setId_med(int id_med) {
+        this.id_med = id_med;
     }
 
     public String getNombre() {
@@ -26,20 +35,12 @@ public class Medico {
         this.nombre = nombre;
     }
 
-    public String getPaterno() {
-        return paterno;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setPaterno(String paterno) {
-        this.paterno = paterno;
-    }
-
-    public String getMaterno() {
-        return materno;
-    }
-
-    public void setMaterno(String materno) {
-        this.materno = materno;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getDirConsultorio() {

@@ -115,6 +115,8 @@ public class Tab1 extends android.support.v4.app.Fragment {
         // finish();
         // startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
     }
+
+
     public void Dialog(String mensaje) {
         Dialog newFragment = Dialog.newInstance(mensaje);
         newFragment.show(getActivity().getFragmentManager(), "dialog");
