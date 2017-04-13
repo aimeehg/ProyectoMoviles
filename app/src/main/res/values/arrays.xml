@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cabecera_tabla">
+        <item>Fecha</item>
+        <item>Hora </item>
+        <item>Alimentos</item>
+        <item>Nivel</item>
+    </string-array>
+</resources>

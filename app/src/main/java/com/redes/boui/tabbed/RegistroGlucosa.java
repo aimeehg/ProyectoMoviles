@@ -6,10 +6,11 @@ package com.redes.boui.tabbed;
 
 public class RegistroGlucosa {
    protected String yyyy, mm, dd, hh, cuando;
-    protected int nivel, idPaciente;
+    protected int nivel, idPaciente, id_reg;
 
-    public RegistroGlucosa(String yyyy, String mm, String dd, String hh, String cuando, int nivel,
+    public RegistroGlucosa(int id_reg, String yyyy, String mm, String dd, String hh, String cuando, int nivel,
                            int idPaciente){
+        this.id_reg = id_reg;
         this.yyyy = yyyy;
         this.mm = mm;
         this.dd = dd;
@@ -17,6 +18,14 @@ public class RegistroGlucosa {
         this.cuando = cuando;
         this.nivel = nivel;
         this.idPaciente = idPaciente;
+    }
+
+    public int getId_reg() {
+        return id_reg;
+    }
+
+    public void setId_reg(int id_reg) {
+        this.id_reg = id_reg;
     }
 
     public String getYyyy() {

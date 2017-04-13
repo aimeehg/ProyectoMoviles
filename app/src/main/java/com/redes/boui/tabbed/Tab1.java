@@ -25,7 +25,7 @@ import java.util.Calendar;
 public class Tab1 extends android.support.v4.app.Fragment {
     private Button btnFecha, btnHora, btnEnviar;
     private TextView efecha,ehora;
-    private int dia, mes, anio, hora, minutos, idCuando;
+    private int dia, mes, anio, hora, minutos, idCuando, otrodia;
     private EditText glucosa;
     private Spinner cuando;
     private bd base;
@@ -73,6 +73,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
+                        otrodia = dayOfMonth;
                         efecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
                     }
                 },anio,mes,dia);
@@ -103,12 +104,12 @@ public class Tab1 extends android.support.v4.app.Fragment {
     }
     private void insertarbd(){
         idCuando = cuando.getSelectedItemPosition();
-        Log.d(TAG,dia + "/" + mes +"/" +anio);
+        Log.d(TAG, otrodia + "/" + (mes+1) +"/" +anio);
         Log.d(TAG,idCuando + " :cuando");
         Log.d(TAG, ehora.getText().toString() + " :hora");
         Log.d(TAG, glucosa.getText().toString() + " :lvl glucosa");
         Log.d(TAG, String.valueOf(main.getIduser()));
-        base.insertarRegistro(anio,dia,mes,ehora.getText().toString(),idCuando,
+        base.insertarRegistro(anio,(mes+1),otrodia,ehora.getText().toString(),idCuando,
                                 Integer.parseInt(glucosa.getText().toString()), main.getIduser());
        // base.insertarUsuario(glucosa.getText().toString(),idMedicamento);
         Dialog("Registro de glucosa registrado exitosamente");

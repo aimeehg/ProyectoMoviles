@@ -145,6 +145,28 @@ public class bd extends SQLiteOpenHelper {
         return db.update("medico", values, "ID_MED = ?",
                 new String[] { String.valueOf(medico.getId_med()) });
     }
+    public List<RegistroGlucosa> getRegistros(int id_paciente, String mes ){
+        List<RegistroGlucosa> registros = new ArrayList<RegistroGlucosa>();
+        String selectQuery = "SELECT * FROM registros WHERE id_paciente=? AND mes=?";
+        Log.e("bd.java", selectQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, new String[] { String.valueOf(id_paciente), mes});
+        //yyyy, mm, dd, hh, cuando;
+        if(c.moveToFirst()){
+            do{
+                RegistroGlucosa reg = new RegistroGlucosa(
+                    c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),
+                        c.getString(5), c.getInt(6), c.getInt(7)
+                );
+              //  Log.e("bd.java", "HEYYYYYYYYYYYYYYY");
+               // Log.e("bd.java", c.getString(3));
+                registros.add(reg);
+            }while (c.moveToNext());
+        }
+        db.close();
+        c.close();
+        return registros;
+    }
     public int Login(String usuario, String password){
         int id = -1;
         SQLiteDatabase db = this.getReadableDatabase();
