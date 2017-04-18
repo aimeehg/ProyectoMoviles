@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.redes.boui.tabbed">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +28,19 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <service android:name="com.android.mms.transaction.TransactionService"/>
+        <receiver
+            android:name="com.klinker.android.send_message.SentReceiver"
+            android:taskAffinity="com.redes.boui.tabbed.SMS_SENT"/>
 
+        <receiver
+            android:name="com.klinker.android.send_message.DeliveredReceiver"
+            android:taskAffinity="com.redes.boui.tabbed.SMS_DELIVERED"/>
+
+        <!-- Your custom receiver which is child of com.klinker.android.send_message.MmsSentReceiver -->
+        <receiver
+            android:name="com.redes.boui.tabbed.MmsReceiver"
+            android:taskAffinity="com.klinker.android.messaging.MMS_SENT"/>
 
 
     </application>

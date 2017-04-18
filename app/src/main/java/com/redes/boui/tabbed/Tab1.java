@@ -1,9 +1,12 @@
 package com.redes.boui.tabbed;
 
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,11 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.klinker.android.send_message.Message;
+import com.klinker.android.send_message.Settings;
+import com.klinker.android.send_message.Transaction;
 
 import java.util.Calendar;
 
@@ -32,6 +40,9 @@ public class Tab1 extends android.support.v4.app.Fragment {
     private final String TAG = "TAB1";
     private boolean validacion = true;
     private MainActivity main;
+    Medico medico = null;
+    private String mensaje = "";
+    private String numero = "";
 
 
     @Override
@@ -53,6 +64,8 @@ public class Tab1 extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 if(validar()) {
                     //base de datos
+                    idCuando = cuando.getSelectedItemPosition();
+                    revisarNivel();
                     insertarbd();
                 }
                 else
@@ -103,7 +116,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
         return view;
     }
     private void insertarbd(){
-        idCuando = cuando.getSelectedItemPosition();
+
         Log.d(TAG, otrodia + "/" + (mes+1) +"/" +anio);
         Log.d(TAG,idCuando + " :cuando");
         Log.d(TAG, ehora.getText().toString() + " :hora");
@@ -112,6 +125,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
         base.insertarRegistro(anio,(mes+1),otrodia,ehora.getText().toString(),idCuando,
                                 Integer.parseInt(glucosa.getText().toString()), main.getIduser());
        // base.insertarUsuario(glucosa.getText().toString(),idMedicamento);
+
         Dialog("Registro de glucosa registrado exitosamente");
         // finish();
         // startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
@@ -122,10 +136,101 @@ public class Tab1 extends android.support.v4.app.Fragment {
         Dialog newFragment = Dialog.newInstance(mensaje);
         newFragment.show(getActivity().getFragmentManager(), "dialog");
     }
+    public void revisarNivel(){
+        EnviarEmail em = null;
+        int lvlglu = Integer.parseInt(glucosa.getText().toString());
+        medico = base.getMedico(main.getIduser());
+        Paciente paciente = base.getPacienteShort(main.getIduser());
+        String nombreCompleto = "";
+        //si obtuvo datos
+        if(paciente != null){
+            nombreCompleto = paciente.getNom() + " " + paciente.getPat() + " " + paciente.getMat();
+        }
+        //si es antes de comer
+        if(idCuando == 1){
+            //si está fuera del límite, enviar mensaje e email al medico
+            if(!(lvlglu >= 70 && lvlglu <= 130)){
+                //revisar si el paciente tiene un medico registrado
+                if(medico != null){
+                    Log.d(TAG, "hay medico");
+                    //filtrar mensaje dependiendo de nivel alto o bajo
+                    if (lvlglu > 70) {
+                        em = new EnviarEmail(getActivity().getApplicationContext(),
+                                medico.getEmail(), "Alerta de nivel de glucosa alto", "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa de "+lvlglu+ " mg/dl. Atender de inmediato.");
+                        //EnviarMensaje(medico.getCelular(), "El paciente " + nombreCompleto +
+                        //        " registró un nivel de glucosa alto de "+lvlglu+ " mg/dl");
+                        mensaje = "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa alto de "+lvlglu+ " mg/dl";
+                        numero = medico.getCelular();
+                        sendMessage();
+                        em.execute();
+                    }else{
+                        em = new EnviarEmail(getActivity().getApplicationContext(),
+                                medico.getEmail(), "Alerta de nivel de glucosa bajo", "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa de "+lvlglu+ " mg/dl. Atender de inmediato.");
+                        mensaje = "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa bajo de "+lvlglu+ " mg/dl";
+                        numero = medico.getCelular();
+                        sendMessage();
+                        em.execute();
+                    }
+                }else
+                    Dialog("Por favor regístre su médico.");
+            }
+            //si es fespués de comer
+        }else{
+            //si está fuera del límite, enviar mensaje e email al medico
+            if(!(lvlglu >= 70 && lvlglu <= 180)){
+                //revisar si el paciente tiene un medico registrado
+                if(medico != null){
+                    Log.d(TAG, "hay medico");
+                    if (lvlglu > 70) {
+                        em = new EnviarEmail(getActivity().getApplicationContext(),
+                                medico.getEmail(), "Alerta de nivel de glucosa alto", "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa de "+lvlglu+ " mg/dl. Atender de inmediato.");
+                        em.execute();
+                        mensaje = "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa alto de "+lvlglu+ " mg/dl";
+                        numero = medico.getCelular();
+                        sendMessage();
+                    }else{
+                        em = new EnviarEmail(getActivity().getApplicationContext(),
+                                medico.getEmail(), "Alerta de nivel de glucosa bajo", "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa de "+lvlglu+ " mg/dl. Atender de inmediato.");
+                        mensaje = "El paciente " + nombreCompleto +
+                                " registró un nivel de glucosa bajo de "+lvlglu+ " mg/dl";
+                        numero = medico.getCelular();
+                        sendMessage();
+                        em.execute();
+                    }
+                }else
+                    Dialog("Por favor regístre su médico.");
+            }
+        }
 
+    }
+
+    public void sendMessage() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                com.klinker.android.send_message.Settings sendSettings = new com.klinker.android.send_message.Settings();
+
+                sendSettings.setUseSystemSending(true);
+
+                Transaction transaction = new Transaction(getActivity().getApplicationContext(), sendSettings);
+
+                Message message = new Message(mensaje, numero);
+
+
+                transaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+            }
+        }).start();
+    }
     private boolean validar(){
         if (TextUtils.isEmpty(glucosa.getText().toString())){
-            glucosa.setError("Escribe tu nombre");
+            glucosa.setError("Escribe nivel de glucosa");
             return false;
         }
 

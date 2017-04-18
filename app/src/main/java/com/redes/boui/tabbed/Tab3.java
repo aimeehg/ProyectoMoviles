@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Description;
@@ -43,6 +42,7 @@ public class Tab3 extends android.support.v4.app.Fragment {
     private bd base;
     private int idMes;
     private TextView ejex, ejey;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab3_grafica, container, false);
@@ -102,13 +102,13 @@ public class Tab3 extends android.support.v4.app.Fragment {
                       //  YAxis yAxis = chart.
                         YAxis leftAxis = chart.getAxisLeft();
 
-                        LimitLine high = new LimitLine(170f, "Alto");
+                        LimitLine high = new LimitLine(130f, "Alto");
                         high.setLineColor(Color.RED);
                         high.setLineWidth(2f);
                         high.setTextColor(Color.BLACK);
                         high.setTextSize(12f);
 
-                        LimitLine bien = new LimitLine(65f, "Excelente");
+                        LimitLine bien = new LimitLine(70f, "Excelente");
                         bien.setLineColor(Color.GREEN);
                         bien.setLineWidth(2f);
                         bien.setTextColor(Color.BLACK);

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.redes.boui.tabbed"
-        minSdkVersion 13
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -30,4 +30,9 @@ dependencies {
 }
 dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+}
+dependencies {
+    compile 'com.sun.mail:android-mail:1.5.5'
+    compile 'com.sun.mail:android-activation:1.5.5'
+    compile 'com.klinkerapps:android-smsmms:4.0.0'
 }

@@ -26,6 +26,12 @@ public class Paciente {
         this.gen = gen;
         this.med = med;
     }
+    public Paciente(int id, String nom, String pat, String mat){
+        this.id = id;
+        this.nom = nom;
+        this.pat = pat;
+        this.mat = mat;
+    }
 
     public int getId() {
         return id;

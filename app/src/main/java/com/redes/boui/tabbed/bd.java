@@ -77,7 +77,26 @@ public class bd extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public Paciente getPacienteShort(int id_paciente){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] valores_recuperar = {"ID", "nombre", "paterno", "materno"};
+        Cursor c = db.query("usuarios", valores_recuperar, "ID=" + id_paciente,
+                null, null, null, null, null);
+        Paciente paciente = null;
+        if(c.getCount()>0) {
+            if (c != null) {
+                c.moveToFirst();
+            }
+            Log.e("getpaciente ", c.getString(1));
+            paciente = new Paciente(c.getInt(0),c.getString(1), c.getString(2),
+                    c.getString(3));
 
+        }
+        //medico = null;
+        db.close();
+        c.close();
+        return paciente;
+    }
     public void insertarRegistro(int year, int mes, int dia, String hora, int cuando, int nivel,
                                  int idpaciente) {
         SQLiteDatabase db = getWritableDatabase();
