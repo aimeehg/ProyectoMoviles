@@ -5,9 +5,16 @@ package com.redes.boui.tabbed;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.database.sqlite.SQLiteOpenHelper;
+        import android.os.Environment;
         import android.util.Log;
 
+        import java.io.File;
+        import java.io.FileWriter;
+        import java.text.DateFormat;
+        import java.text.SimpleDateFormat;
         import java.util.ArrayList;
+        import java.util.Calendar;
+        import java.util.Date;
         import java.util.List;
 
 /**
@@ -18,7 +25,7 @@ public class bd extends SQLiteOpenHelper {
     private static final int VERSION_BASEDATOS = 1;
 
     // Nombre de nuestro archivo de base de datos
-    private static final String NOMBRE_BASEDATOS = "db_proyecto.db";
+    private static final String NOMBRE_BASEDATOS = "db_proyecto1.db";
 
     // Sentencia SQL para la creación de una tabla
     private static final String TABLA_USUARIOS = "CREATE TABLE usuarios" +
@@ -27,19 +34,23 @@ public class bd extends SQLiteOpenHelper {
             "genero INTEGER, medicamento INTEGER)";
     private static final String TABLA_REGISTROS = "CREATE TABLE registros"+
             "(ID_REG INTEGER PRIMARY KEY AUTOINCREMENT, year INTEGER, mes INTEGER, dia INTEGER,"+
-            "hora TEXT, cuando INTEGER, nivel INTEGER, id_paciente INTEGER, FOREIGN KEY(id_paciente) " +
+            "hora TEXT, cuando INTEGER, nivel INTEGER, id_paciente INTEGER, fecha TEXT, FOREIGN KEY(id_paciente) " +
             "REFERENCES usuarios(ID))";
     private static final String TABLA_MEDICO = "CREATE TABLE medico"+
             "(ID_MED INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellidos TEXT, " +
             "dir_consultorio TEXT, celular  TEXT, email TEXT, id_paciente INTEGER, FOREIGN KEY(id_paciente) " +
             "REFERENCES usuarios(ID))";
+    public String databasePath = "";
+    public File database;
 
-   
+
 
 
     // CONSTRUCTOR de la clase
     public bd(Context context) {
         super(context, NOMBRE_BASEDATOS, null, VERSION_BASEDATOS);
+        databasePath = context.getDatabasePath("db_proyecto.db").getPath();
+        database = context.getDatabasePath("db_proyecto.db");
     }
 
     @Override
@@ -77,6 +88,30 @@ public class bd extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public Paciente getPaciente(int id_paciente){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] valores_recuperar = {"ID", "nombre", "paterno", "materno", "direccion", "edad", "peso", "altura",
+                                        "usuario", "password", "genero", "medicamento"};
+        Cursor c = db.query("usuarios", valores_recuperar, "ID=" + id_paciente,
+                null, null, null, null, null);
+        Paciente paciente = null;
+        if(c.getCount()>0) {
+            if (c != null) {
+                c.moveToFirst();
+            }
+            Log.e("getpaciente1 ", c.getInt(0) + c.getString(1) + c.getString(2)+
+                    c.getString(3) +c.getString(4) +" "+c.getInt(5)+" "+c.getInt(6)+" "+c.getFloat(7)+" "+c.getString(8)+
+                    " "+c.getString(9)+" "+c.getInt(10)+" "+c.getInt(11));
+            paciente = new Paciente(c.getInt(0),c.getString(1), c.getString(2),
+                    c.getString(3),c.getString(4),c.getInt(5),c.getInt(6),c.getFloat(7),c.getString(8),
+                    c.getString(9),c.getInt(10),c.getInt(11));
+
+        }
+
+        db.close();
+        c.close();
+        return paciente;
+    }
     public Paciente getPacienteShort(int id_paciente){
         SQLiteDatabase db = getReadableDatabase();
         String[] valores_recuperar = {"ID", "nombre", "paterno", "materno"};
@@ -100,6 +135,8 @@ public class bd extends SQLiteOpenHelper {
     public void insertarRegistro(int year, int mes, int dia, String hora, int cuando, int nivel,
                                  int idpaciente) {
         SQLiteDatabase db = getWritableDatabase();
+        String mes1 = "";
+        String dia1 = "";
         if(db != null){
             ContentValues valores = new ContentValues();
            valores.put("year", year);
@@ -109,6 +146,18 @@ public class bd extends SQLiteOpenHelper {
             valores.put("cuando", cuando);
             valores.put("nivel", nivel);
             valores.put("id_paciente", idpaciente);
+            if (mes <10){
+                mes1 = "0"+String.valueOf(mes);
+            }else{
+                mes1 = String.valueOf(mes);
+            }
+            if (dia <10){
+                dia1 = "0"+String.valueOf(dia);
+            }else{
+                dia1 = String.valueOf(dia);
+            }
+            String fechita = String.valueOf(year) + "-" + mes1 + "-" + dia1;
+            valores.put("fecha", fechita);
 
             db.insert("registros", null, valores);
             db.close();
@@ -164,6 +213,27 @@ public class bd extends SQLiteOpenHelper {
         return db.update("medico", values, "ID_MED = ?",
                 new String[] { String.valueOf(medico.getId_med()) });
     }
+    public int editarPaciente(Paciente paciente){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("nombre", paciente.getNom());
+        values.put("paterno", paciente.getPat());
+        values.put("materno", paciente.getMat());
+        values.put("direccion", paciente.getDir());
+        values.put("edad", paciente.getEdad());
+        values.put("peso", paciente.getPeso());
+        values.put("altura", paciente.getAlt());
+        values.put("usuario", paciente.getUsu());
+        values.put("password", paciente.getPass());
+        values.put("genero", paciente.getGen());
+        values.put("medicamento", paciente.getMed());
+
+        // updating row
+        return db.update("usuarios", values, "ID = ?",
+                new String[] { String.valueOf(paciente.getId()) });
+    }
     public List<RegistroGlucosa> getRegistros(int id_paciente, String mes ){
         List<RegistroGlucosa> registros = new ArrayList<RegistroGlucosa>();
         String selectQuery = "SELECT * FROM registros WHERE id_paciente=? AND mes=?";
@@ -197,15 +267,46 @@ public class bd extends SQLiteOpenHelper {
         }
         return id;
     }
+    public void exportDB(String path, int id_paciente) {
 
-    public void borrarUsuario(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete("usuarios","id="+id,null);
-        db.close();
+        File dbFile = database;
+       // DBHelper dbhelper = new DBHelper(getApplicationContext());
+        File exportDir = new File(path, "");
+        if (!exportDir.exists()) {
+            exportDir.mkdirs();
+        }
+        DateFormat df = new SimpleDateFormat("dd MM yyyy, HH:mm:ss");
+        String date = df.format(Calendar.getInstance().getTime());
+        File file = new File(exportDir, date+".csv");
+        try {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = this.getReadableDatabase();
+            //Cursor curCSV = db.rawQuery("SELECT * FROM registros", null);
+            String selectQuery = "SELECT * FROM registros WHERE id_paciente=?";
+            Cursor curCSV = db.rawQuery(selectQuery, new String[] { String.valueOf(id_paciente)});
+            String[] holi = {"ID_REG", "Fecha", "Hora", "Nivel", "Cuando", "id_paciente"};
+            csvWrite.writeNext(holi);
+           // Log.e("bd.java",curCSV.getColumnNames() );
+            while (curCSV.moveToNext()) {
+                //Which column you want to exprort
+                String arrStr[] = {curCSV.getString(0), curCSV.getString(8), curCSV.getString(4),curCSV.getString(6),
+                        curCSV.getString(5),curCSV.getString(7)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        } catch (Exception sqlEx) {
+            Log.e("bd.java", sqlEx.getMessage(), sqlEx);
+        }
     }
-    public void eliminarbd(){
+
+
+    public void eliminar_3meses(){
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("usuarios",null,null);
-        db.close();
+        String sql = "DELETE FROM registros WHERE fecha <= date('now','-3 month')";
+        db.execSQL(sql);
+
     }
+
 }

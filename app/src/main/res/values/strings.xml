@@ -21,7 +21,7 @@
     <string name="fecha">Fecha:</string>
     <string name="sFecha">Selecciona fecha</string>
     <string name="hora">Hora:</string>
-    <string name="sHora">Selecciona hora:</string>
+    <string name="sHora">Selecciona hora</string>
     <string name="antesDespues">Antes/Después de alimentos:</string>
     <string name="enviar">Enviar</string>
     <string name="email">E-mail:</string>
@@ -58,4 +58,9 @@
     </string-array>
     <string name="action_settings">Cerrar sesión</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="directory_selected_label">Directorio seleccionado:</string>
+    <string name="choose_directory">Elegir directorio</string>
+    <string name="none">nada</string>
+    <string name="btn_choose">Elegir carpeta y respaldar</string>
+    <string name="btn_switch">Switch to Dialog Sample</string>
 </resources>

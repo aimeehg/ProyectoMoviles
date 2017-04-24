@@ -19,7 +19,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/Nombre"
+            android:id="@+id/NombreE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -35,7 +35,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/Paterno"
+            android:id="@+id/PaternoE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -51,7 +51,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/Materno"
+            android:id="@+id/MaternoE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -67,7 +67,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/Direccion"
+            android:id="@+id/DireccionE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -83,7 +83,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/Edad"
+            android:id="@+id/EdadE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -103,7 +103,7 @@
                 android:text="@string/txtPeso" >
             </TextView>
             <EditText
-                android:id="@+id/Peso"
+                android:id="@+id/PesoE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,7 +117,7 @@
                 android:text="@string/txtAltura" >
             </TextView>
             <EditText
-                android:id="@+id/Altura"
+                android:id="@+id/AlturaE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -132,26 +132,26 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:focusableInTouchMode="true"
-            android:id="@+id/txtViewGenero"
+            android:id="@+id/txtViewGeneroE"
             android:text="@string/txtGenero" >
         </TextView>
 
         <RadioGroup
-            android:id="@+id/radioGenero"
+            android:id="@+id/radioGeneroE"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
 
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/radioGenderF"
+                android:id="@+id/radioGenderFE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/GeneroF" />
 
             <RadioButton
-                android:id="@+id/radioGenderM"
+                android:id="@+id/radioGenderME"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -160,7 +160,7 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textViewMedicamento"
+            android:id="@+id/textViewMedicamentoE"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -168,7 +168,7 @@
             android:text="@string/txtMedicamento" >
         </TextView>
         <Spinner
-            android:id="@+id/spinnerMedicamento"
+            android:id="@+id/spinnerMedicamentoE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -183,7 +183,7 @@
             android:text="@string/txtUsuario" >
         </TextView>
         <EditText
-            android:id="@+id/UsuarioR"
+            android:id="@+id/UsuarioE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -201,7 +201,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/PasswordR"
+            android:id="@+id/PasswordE"
             android:inputType="textPassword"
             android:layout_margin="5dp"
             />
@@ -211,38 +211,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
-
             <Button
-                android:id="@+id/btnCancelar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:text="@string/btnCancelar" />
-
-            <Button
-                android:id="@+id/btnIniciarSesion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:text="Iniciar Sesión" />
-
-
-            <Button
-                android:id="@+id/btnAceptar"
+                android:id="@+id/btnAceptarE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:background="@color/colorPrimaryDark"
                 android:textColor="@android:color/white"
-                android:text="@string/btnAceptar" />
+                android:text="Enviar" />
+
+            <Button
+                android:id="@+id/btnCancelarE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:text="Atrás" />
+
+
         </LinearLayout>
 
 

@@ -53,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 android:text="@string/btnCancelar" />
             <Button
                 android:id="@+id/btnRegistro"
@@ -60,6 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 android:text="@string/btnRegistro"
                 />
 
@@ -69,8 +73,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
                 android:text="@string/btnAceptar"
                 />
+
 
 
 

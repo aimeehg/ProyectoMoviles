@@ -31,9 +31,9 @@ import java.util.Calendar;
  */
 
 public class Tab1 extends android.support.v4.app.Fragment {
-    private Button btnFecha, btnHora, btnEnviar;
+    private Button btnFecha, btnHora, btnEnviar, btnBorrar;
     private TextView efecha,ehora;
-    private int dia, mes, anio, hora, minutos, idCuando, otrodia;
+    private int dia, mes, anio, hora, minutos, idCuando, otrodia,otromes;
     private EditText glucosa;
     private Spinner cuando;
     private bd base;
@@ -53,6 +53,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
         efecha = (TextView) view.findViewById(R.id.fecha);
         ehora = (TextView) view.findViewById(R.id.hora);
         btnEnviar = (Button)view.findViewById(R.id.enviarBtn);
+        btnBorrar = (Button)view.findViewById(R.id.btnBorrar);
         glucosa = (EditText)view.findViewById(R.id.glucosa);
         cuando = (Spinner)view.findViewById(R.id.spinnerAlimentos);
         main = (MainActivity)getActivity();
@@ -87,6 +88,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         otrodia = dayOfMonth;
+                        otromes = (monthOfYear+1);
                         efecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
                     }
                 },anio,mes,dia);
@@ -99,6 +101,7 @@ public class Tab1 extends android.support.v4.app.Fragment {
                 final Calendar c = Calendar.getInstance();
                 hora = c.get(Calendar.HOUR_OF_DAY);
                 minutos = c.get(Calendar.MINUTE);
+                //segundos = c.get(Calendar.SECOND);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -111,18 +114,31 @@ public class Tab1 extends android.support.v4.app.Fragment {
 
         });
 
+        btnBorrar.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                efecha.setText("");
+                ehora.setText("");
+                glucosa.setText("");
+                cuando.setSelection(0);
+            }
+
+        });
+
+
+
 
 
         return view;
     }
     private void insertarbd(){
 
-        Log.d(TAG, otrodia + "/" + (mes+1) +"/" +anio);
+        Log.d(TAG, otrodia + "/" + otromes +"/" +anio);
         Log.d(TAG,idCuando + " :cuando");
         Log.d(TAG, ehora.getText().toString() + " :hora");
         Log.d(TAG, glucosa.getText().toString() + " :lvl glucosa");
         Log.d(TAG, String.valueOf(main.getIduser()));
-        base.insertarRegistro(anio,(mes+1),otrodia,ehora.getText().toString(),idCuando,
+
+        base.insertarRegistro(anio,otromes,otrodia,ehora.getText().toString(),idCuando,
                                 Integer.parseInt(glucosa.getText().toString()), main.getIduser());
        // base.insertarUsuario(glucosa.getText().toString(),idMedicamento);
 

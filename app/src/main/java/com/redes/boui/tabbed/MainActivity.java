@@ -38,10 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     protected Session session;
     private int iduser;
+    private bd base;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        base = new bd(getApplicationContext());
+        base.eliminar_3meses();
         session = new Session(getApplicationContext());
         if(!session.loggedIn()){
             logout();
@@ -89,6 +92,20 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             logout();
+        }
+        if (id == R.id.exportar) {
+            //logout();
+             Intent fragmentSampleIntent = new Intent(
+                    MainActivity.this,
+                    DirChooserFragment.class
+            );
+            fragmentSampleIntent.putExtra("id_user",getIduser());
+            startActivity(fragmentSampleIntent);
+        }
+        if(id == R.id.perfil){
+            Intent editar = new Intent(MainActivity.this, EditarPerfil.class);
+            editar.putExtra("id_user",getIduser());
+            startActivity(editar);
         }
 
         return super.onOptionsItemSelected(item);

@@ -88,14 +88,34 @@
             android:layout_margin="5dp"
             android:entries="@array/alimentos" >
         </Spinner>
-        <Button
-            android:id="@+id/enviarBtn"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@android:color/white"
-            android:text="@string/enviar"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/enviarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
+                android:text="@string/enviar"/>
+            <Button
+                android:id="@+id/btnBorrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:text="Cancelar"
+                />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
